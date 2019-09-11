@@ -1,14 +1,13 @@
 version: '3.6'
 
 x-base: &base
-  build:
-    context: .
-    environment:
-      DJANGO_SETTINGS_MODULE: 'montgomery.settings'
-    ports:
-      - 8000
-    volumes:
-      - .:/app/montgomery
+  build: .
+  environment:
+    DJANGO_SETTINGS_MODULE: 'montgomery.settings'
+  ports:
+    - 8000
+  volumes:
+    - .:/app/montgomery
 
 services:
   db:
