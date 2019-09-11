@@ -4,8 +4,7 @@ x-base: &base
   build: .
   environment:
     DJANGO_SETTINGS_MODULE: 'montgomery.settings'
-  ports:
-    - 8000
+  entrypoint: gunicorn
   volumes:
     - .:/app/montgomery
 
@@ -22,19 +21,13 @@ services:
 
   app:
     <<: *base
-    entrypoint: gunicorn
     command: --reload --workers=5 --threads=2 --max-requests 1000 --bind 0.0.0.0:8000 montgomery.wsgi
-    ports:
-      - 8000
     depends_on:
       - db
 
   api:
     <<: *base
-    entrypoint: python
-    command: server.py
-    ports:
-      - 8080
+    command: --reload --workers=5 --worker-class aiohttp.GunicornWebWorker --max-requests 1000 --bind 0.0.0.0:8000 server:main
     depends_on:
       - app
       - db

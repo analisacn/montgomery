@@ -16,8 +16,3 @@ async def main():
     web_app = web.Application()
     web_app.on_startup.append(setup_django)
     return web_app
-
-
-if __name__ == '__main__':
-    app = await main()
-    web.run_app(app)
